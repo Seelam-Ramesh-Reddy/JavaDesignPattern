@@ -1,15 +1,11 @@
+package Creational.src;
+
 public class Singleton {
 
     public static void main(String[] args) {
-        for(int i=0;i<100;i++){
-            System.out.println(SingletonEager.getInstance());
-            System.out.println(SingletonLazy.getInstance());
-        }
+            System.out.println(SingletonEager.getInstance()); System.out.println(" --> "+SingletonEager.getInstance());
+            System.out.println(SingletonLazy.getInstance()); System.out.println("-->  "+SingletonLazy.getInstance());
     }
-
-
-
-
 }
 
 //Singleton eager initialization
@@ -29,12 +25,41 @@ class SingletonEager {
 class SingletonLazy {
     private static SingletonLazy SingletonInstance;
 
-    static {
-        SingletonInstance=new SingletonLazy();
-    }
     private SingletonLazy(){}
 
     public static SingletonLazy getInstance(){
+        if(SingletonInstance ==null){
+            SingletonInstance= new SingletonLazy();
+        }
         return SingletonInstance;
+    }
+}
+
+class SingletonMethodSynchronized{
+    private static SingletonMethodSynchronized singleSynchronized;
+    private SingletonMethodSynchronized(){}
+
+    public static synchronized SingletonMethodSynchronized getInstance(){
+        if (singleSynchronized ==null){
+            singleSynchronized =new SingletonMethodSynchronized();
+        }
+        return singleSynchronized;
+    }
+}
+
+
+class SingletonSynchronized{
+    private static SingletonSynchronized singleSynchronized;
+    private SingletonSynchronized(){}
+
+    public static  SingletonSynchronized getInstance(){
+        if (singleSynchronized ==null){
+            synchronized (SingletonSynchronized.class){
+                if (singleSynchronized ==null){
+                    singleSynchronized =new SingletonSynchronized();
+                }
+            }
+        }
+        return singleSynchronized;
     }
 }
